@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acessar Conta</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <h2 id="welcome_message"></h2>
+    <form>
+        <button type="button" id="logout">Logout</button>
+        <h2 id="balance"></h2>
+        <h2>
+            Escolha a operação que quer realizar
+        </h2>
+        <div>
+            <button type="button" id="open_deposit_modal">Depósito</button>
+            <button type="button" id="open_transfer_modal">Transferência</button>
+            <button type="button" id="open_withdraw_modal">Saque</button>
+            <button type="button" id="open_extract_modal">Consultar Extrato</button>
+        </div>
+    </form>
+
+    <div class="modal" id="deposit_modal">
+        <form>
+            <img class="close_modals" id="go_back_button" src="images/go_back_button.svg" alt="Botão Voltar">
+            <h2>Fazer Deposito</h2>
+
+            <input min="1" type="number" id="deposit_value" placeholder="Valor do deposito"/>
+            
+            <button type="button" id="send_deposit">Concluir</button>
+        </form>
+    </div>
+    <div class="modal" id="transfer_modal">
+        <form>
+            <img class="close_modals" id="go_back_button" src="images/go_back_button.svg" alt="Botão Voltar">
+            <h2>Fazer Transferência</h2>
+
+            <input min="1" type="string" id="dest_account_agency" placeholder="Agência do Destinatário"/>
+            <input min="1" type="string" id="dest_account_number" placeholder="Número da Conta do Destinatário"/>
+            <input min="1" type="number" id="transfer_value" placeholder="Valor da transferência"/>
+
+            <button type="button" id="send_transfer">Concluir</button>
+        </form>
+    </div>
+    <div class="modal" id="withdraw_modal">
+        <form>
+            <img class="close_modals" id="go_back_button" src="images/go_back_button.svg" alt="Botão Voltar">
+            <h2>Fazer Saque</h2>
+
+            <input min="1" type="number" id="withdraw_value" placeholder="Valor do saque"/>
+
+            <button type="button" id="make_withdraw">Concluir</button>
+        </form>
+    </div>
+    <div class="modal" id="extract_modal">
+        <form>
+            <img class="close_modals" id="go_back_button" src="images/go_back_button.svg" alt="Botão Voltar">
+            <h2>Seu Extrato</h2>
+            <div id="extract_list"></div>
+        </form>
+    </div>
+
+
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
