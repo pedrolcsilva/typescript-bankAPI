@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 	agency VARCHAR (4) NOT NULL,
 	verifying_agency_digit VARCHAR (1) NOT NULL,
 	balance NUMERIC (20, 2) NOT NULL,
-	password varchar (50) NOT NULL,
+	password varchar (255) NOT NULL,
 	PRIMARY KEY (id)
 );
 
