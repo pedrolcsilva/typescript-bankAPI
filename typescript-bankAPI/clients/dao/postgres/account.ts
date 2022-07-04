@@ -61,13 +61,12 @@ class AccountTable extends myDB {
             ]);
             
             if(USERS_ACCOUNT.rows.length != 0){
-                console.log(account.password)
-                console.log(USERS_ACCOUNT.rows[0].password)
                 const isEqual = await new this.encryptor().decrypt(account.password as string, USERS_ACCOUNT.rows[0].password);
-                console.log(isEqual);
                 if(isEqual) return USERS_ACCOUNT.rows[0];
             }
+
             throw new Error("400: password not match");
+
         }catch(err){
             throw new Error("400: unexpected error")
         }

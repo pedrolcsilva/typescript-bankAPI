@@ -5,3 +5,4 @@ export {MakeDeposit} from './make-deposit';
 export {MakeWithdraw} from './make-withdraw';
 export {GetExtract} from './extract';
 export {Encryptor} from './bcrypto';
+export {UserLogin} from './login';

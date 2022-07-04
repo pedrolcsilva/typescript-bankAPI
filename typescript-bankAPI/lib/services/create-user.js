@@ -28,7 +28,6 @@ class CreateUser {
                 }
                 USER_DATA.user.id = (0, uuid_1.v4)();
                 const dbInsertion = yield new this.userTable().insert(USER_DATA.user);
-                console.log(dbInsertion);
                 if (dbInsertion) {
                     if (typeof dbInsertion == "string")
                         USER_DATA.user.id = dbInsertion;

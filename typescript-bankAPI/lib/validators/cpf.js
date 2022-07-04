@@ -16,7 +16,7 @@ class CpfValidator {
             this.errors += "|Invalid CPF format";
             return "";
         }
-        return cpf.trim();
+        return cpf.replace('.', '').replace('.', '').replace('-', '').trim();
     }
 }
 exports.CpfValidator = CpfValidator;

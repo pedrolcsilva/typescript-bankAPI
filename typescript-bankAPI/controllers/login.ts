@@ -1,26 +1,17 @@
 import {Request, Response} from 'express';
 import {ResponseWriter} from '../utils';
-import {myDB} from '../clients/dao/postgres';
-import { AccountTable } from '../clients/dao/postgres/account';
-import { UserTable } from '../clients/dao/postgres/user';
+import { UserLogin } from '../services';
 
-class LoginAccount extends myDB{
+class LoginAccount {
     private responseWriter = ResponseWriter;
-    private accountTable = AccountTable;
-    private userTable = UserTable;
+    private userLogin = UserLogin;
 
     public async handle(req: Request, res: Response){
         try{     
-            const partial_response = await new this.accountTable().login(req.body);
-            const response = await new this.userTable().getData(JSON.parse(JSON.stringify(partial_response)).owner_id);
-            
-            const USER_DATA = {
-                user: JSON.parse(JSON.stringify(response)).resp,
-                account: JSON.parse(JSON.stringify(partial_response))
-            }
-            res.cookie("user", USER_DATA);
+            const response = await new this.userLogin().execute(req.body);
+            res.cookie("user", response.data);
 
-            this.responseWriter.sucess(res, 200, {data: USER_DATA.account, messages: []});            
+            this.responseWriter.sucess(res, 200, response);            
         }catch(err){
             this.responseWriter.error(res, err as Error);
         }

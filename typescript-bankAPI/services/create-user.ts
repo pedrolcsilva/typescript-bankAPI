@@ -19,7 +19,7 @@ class CreateUser{
             USER_DATA.user.id = v4();
 
             const dbInsertion = await new this.userTable().insert(USER_DATA.user as User);
-            console.log(dbInsertion)
+            
             if(dbInsertion){
                 if(typeof dbInsertion == "string") USER_DATA.user.id = dbInsertion;
                 return {
@@ -34,7 +34,7 @@ class CreateUser{
             } as APIResponse;
 
         }catch(err){
-            throw new ExceptionTreatment(err as Error, 500, "user insertion in database failed")
+            throw new ExceptionTreatment(err as Error, 500, "user insertion in database failed");
         }
     }
 }

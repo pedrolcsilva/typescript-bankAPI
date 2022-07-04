@@ -27,7 +27,6 @@ class UserTable extends myDB {
             `;
 
             const verifyUser = await this.validate(user);
-            
             if(JSON.parse(JSON.stringify(verifyUser)).resp == "user does not exist"){
                 const result = await this.client.query(insertQuery, [
                     user.id,

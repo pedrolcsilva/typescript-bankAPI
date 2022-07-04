@@ -19,7 +19,7 @@ class TransferOperation extends myDB {
             UPDATE accounts SET balance = balance + $1 WHERE account_number = $2 AND agency = $3;
             `;
 
-            console.log(transaction)
+            transaction.amount = "" + (Number(transaction.amount) - 1)
             const deposit = await this.client.query(depositQuery, [
                 transaction.amount,
                 transaction.account_number,

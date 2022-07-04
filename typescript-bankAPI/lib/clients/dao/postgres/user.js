@@ -33,6 +33,7 @@ class UserTable extends _1.myDB {
                     $5
                 ) RETURNING id
             `;
+                console.log(user.cpf);
                 const verifyUser = yield this.validate(user);
                 if (JSON.parse(JSON.stringify(verifyUser)).resp == "user does not exist") {
                     const result = yield this.client.query(insertQuery, [

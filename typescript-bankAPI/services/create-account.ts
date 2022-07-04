@@ -52,6 +52,7 @@ class CreateAccount {
             const dbInsertion = await new this.accountTable().insert(ACCOUNT_DATA as Account);
             
             if(dbInsertion){
+                ACCOUNT_DATA.password = '';
                 return {
                     data: ACCOUNT_DATA,
                     messages: []

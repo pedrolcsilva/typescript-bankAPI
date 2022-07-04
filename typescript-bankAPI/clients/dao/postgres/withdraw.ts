@@ -11,7 +11,6 @@ class WithdrawOperation extends myDB {
             `;
 
             const deposit = await this.client.query(updateQuery, [transaction.amount, transaction.source_id]);
-            console.log(deposit)    
 
             if(deposit.rows.length !== 0) {
                 return true;

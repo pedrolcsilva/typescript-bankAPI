@@ -8,19 +8,18 @@ class CpfValidator {
     }
 
     public validate(cpf: string): string{
-        const regex = /((\d{2})[.]?(\d{3})[.]?(\d{3})[/]?(\d{4})[-]?(\d{2}))|((\d{3})[.]?(\d{3})[.]?(\d{3})[-]?(\d{2}))/gm;
+        const regex = /(\d{3})[.]?(\d{3})[.]?(\d{3})[-]?(\d{2})/gm;
         
         if(!cpf){
             this.errors += "|CPF was not informed";
             return "";
         }
-
-        if(!regex.test(cpf)){
+        if(cpf != JSON.parse(JSON.stringify(cpf.match(regex)))[0]){
             this.errors += "|Invalid CPF format";
             return "";
         }
         
-        return cpf.trim();
+        return cpf.replace('.', '').replace('.', '').replace('-', '').trim();
     }
 }
 
