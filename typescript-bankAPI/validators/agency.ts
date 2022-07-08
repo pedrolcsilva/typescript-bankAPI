@@ -26,7 +26,6 @@ class AccountAgencyValidator {
             }
         }
         
-
         return agency.trim();
 
     }

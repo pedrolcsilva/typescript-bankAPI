@@ -103,8 +103,8 @@ function makeWithdraw(){
 
 function sendTransfer(){
     const DESTINATION_ACCOUNT = {
-        account_number: document.getElementById('dest_account_number').value,
-        agency: document.getElementById('dest_account_agency').value,
+        destination_account_number: document.getElementById('dest_account_number').value,
+        destination_agency: document.getElementById('dest_account_agency').value,
         amount: document.getElementById('transfer_value').value
     };
 

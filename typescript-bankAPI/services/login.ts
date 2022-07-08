@@ -1,6 +1,5 @@
-import { Account, APIResponse, Transaction } from "../models";
+import { Account, APIResponse } from "../models";
 import { ExceptionTreatment } from "../utils";
-import { v4 } from "uuid";
 import { AccountTable } from '../clients/dao/postgres/account';
 import { UserTable } from '../clients/dao/postgres/user';
 

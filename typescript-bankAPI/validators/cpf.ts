@@ -14,7 +14,12 @@ class CpfValidator {
             this.errors += "|CPF was not informed";
             return "";
         }
-        if(cpf != JSON.parse(JSON.stringify(cpf.match(regex)))[0]){
+
+        if(!cpf.match(regex)){
+            this.errors += "|Invalid CPF format";
+            return "";
+        }
+        else if(cpf != JSON.parse(JSON.stringify(cpf.match(regex)))[0]){
             this.errors += "|Invalid CPF format";
             return "";
         }

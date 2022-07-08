@@ -2,21 +2,22 @@ import { myDB } from ".";
 
 class AccountBalance extends myDB {
 
-    public async get (id: string, amount: string): Promise<boolean> {
+    public async get (account_number: string, agency: string, amount: string): Promise<boolean> {
         try{
             const selectQuery  = `
-                SELECT balance FROM accounts WHERE id = $1
+                SELECT balance FROM accounts WHERE account_number = $1 AND agency = $2
             `;
             
             const result = await this.client.query(selectQuery, [
-                id
+                account_number,
+                agency
             ]);
 
             if(result.rows.length !== 0) {
                 if(Number(result.rows[0].balance) < Number(amount)) return true
                 else return false;
             }
-            throw new Error("404: balance could not be found in database")
+            return false
         
 
         }catch(err){

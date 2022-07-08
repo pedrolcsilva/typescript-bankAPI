@@ -6,17 +6,20 @@ class TransactionTable extends myDB {
 
     public async insert (transaction: Transaction): Promise<boolean> {
         try{
+            console.log(transaction.created_at)
             const insertQuery  = `
                 INSERT INTO transactions (
                     id,
                     type,
                     amount,
-                    source_id
+                    source_id,
+                    created_at
                 ) VALUES (
                     $1,
                     $2,
                     $3,
-                    $4
+                    $4,
+                    $5
                 ) RETURNING id
             `;
 
@@ -24,7 +27,8 @@ class TransactionTable extends myDB {
                 transaction.id,
                 transaction.type,
                 transaction.amount,
-                transaction.source_id
+                transaction.source_id,
+                new Date(transaction.created_at)
             ]);                
 
             if(result.rows.length !== 0) {

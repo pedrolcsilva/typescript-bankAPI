@@ -1,18 +1,21 @@
 import { myDB } from ".";
-import { Transaction } from "../../../models";
+import { Account, Transaction } from "../../../models";
 
 
 class DepositOperation extends myDB {
 
-    public async deposit (transaction: Transaction): Promise<boolean> {
+    public async deposit (transaction: Transaction, account: Partial<Account>): Promise<boolean> {
         try{
             const updateQuery = `
-                UPDATE accounts SET balance = balance + $1 WHERE id = $2;
+                UPDATE accounts SET balance = balance + $1 WHERE account_number = $2 AND agency = $3 RETURNING id;
             `;
 
-            const deposit = await this.client.query(updateQuery, [transaction.amount, transaction.source_id]);
+            const deposit = await this.client.query(updateQuery, [
+                transaction.amount, 
+                account.account_number,
+                account.agency
+            ]);
               
-
             if(deposit.rows.length !== 0) {
                 return true;
             }

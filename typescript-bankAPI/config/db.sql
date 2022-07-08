@@ -18,12 +18,13 @@ CREATE TABLE IF NOT EXISTS accounts (
 	password varchar (255) NOT NULL,
 	PRIMARY KEY (id)
 );
-
+SET TIMEZONE TO 'Brazil/Acre';
+SHOW TIMEZONE;
 CREATE TABLE transactions(
 	id varchar(36) NOT NULL PRIMARY KEY,
 	type VARCHAR(1024) NOT NULL,
 	amount NUMERIC(20, 2) NOT NULL CHECK (amount > 0.0),
-	created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+	created_at TIMESTAMP WITH TIME ZONE 'brt' NOT NULL DEFAULT now(),
 	source_id varchar(36) NOT NULL
 );
 
@@ -43,7 +44,7 @@ INSERT INTO transactions (
 					'f2942dd5-18fd-439c-872d-964a0db29ca6'
                 ) RETURNING id
 				
-UPDATE accounts SET balance = balance + 100 WHERE account_number = '268148666' AND agency = '7827';
+UPDATE accounts SET balance = balance + 100 WHERE account_number = '123456789' AND agency = '1234';
 
 
 INSERT INTO accounts (
@@ -64,4 +65,18 @@ INSERT INTO accounts (
                     '4',
                     '0',
                     '8317'
+                ) RETURNING id
+				
+INSERT INTO users (
+                    id,
+                    name,
+					cpf,
+					email,
+					birthdate
+                ) VALUES (
+                    'f1234dd5-18fd-439c-872d-964a0db29ca6',
+                    'Luquinha',
+                    '10600560614',
+                    'luquinha@gmail.com',
+                    '2002-07-06'
                 ) RETURNING id

@@ -37,7 +37,6 @@ class AccountTable extends myDB {
                 account.balance,
                 account.password
             ]);
-
             if(result.rows.length !== 0) {
                 return true;
             }
@@ -61,8 +60,7 @@ class AccountTable extends myDB {
             ]);
             
             if(USERS_ACCOUNT.rows.length != 0){
-                const isEqual = await new this.encryptor().decrypt(account.password as string, USERS_ACCOUNT.rows[0].password);
-                if(isEqual) return USERS_ACCOUNT.rows[0];
+                return USERS_ACCOUNT.rows[0];
             }
 
             throw new Error("400: password not match");
@@ -108,6 +106,37 @@ class AccountTable extends myDB {
             throw new Error("400: unexpected error")
         }
     }
+
+    public async verifyIfBelongsTo(accountNumber: string, agencyNumber: string, cpf: string): Promise<boolean> {
+        try {
+            const selectQuery = `
+                SELECT * FROM accounts WHERE account_number = $1 AND agency = $2
+            `;
+            
+            const ACCOUNTS = await this.client.query(selectQuery, [accountNumber, agencyNumber]);
+            
+            if(ACCOUNTS.rows.length == 0){
+                return false;
+            };
+            const verifyAccounts = `
+                SELECT * FROM users WHERE id = $1 AND cpf = $2
+            `;
+
+            const ACCOUNT_OWNER = await this.client.query(verifyAccounts, [
+                ACCOUNTS.rows[0].owner_id,
+                cpf
+            ]);
+
+            if(ACCOUNT_OWNER.rows.length == 0){
+                return false;
+            };
+
+            return true;
+        }catch(err){
+            throw new Error("400: unexpected error")
+        }
+    }
+
 }
 
 export {AccountTable};

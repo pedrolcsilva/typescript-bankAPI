@@ -2,18 +2,24 @@ import { AccountTable } from "../clients/dao/postgres/account";
 import { Account, APIResponse, User } from "../models";
 import { ExceptionTreatment } from "../utils";
 import { v4 } from "uuid";
-import {AccountValidator} from '../validators';
+import {AccountValidator, PasswordValidator} from '../validators';
 import {Encryptor} from '../services'
 
 class CreateAccount {
     private accountTable = AccountTable;
-    private accountValidator = AccountValidator;
+    private passwordValidator = PasswordValidator;
     private encryptor = Encryptor;
 
     public async execute (user: User, password: string): Promise<APIResponse> {
         try{
-            let account = await new this.accountValidator(password); 
-            let accountPassword = JSON.parse(JSON.stringify(account.account)).password;
+            let PASSWORD_DATA = await new this.passwordValidator(password); 
+
+            if(PASSWORD_DATA.errors){
+                throw new Error(`${PASSWORD_DATA.errors}`)
+            }
+
+            console.log('ACCOUNT_DATA')
+            const accountPassword = PASSWORD_DATA.password;
             const encryptedPassword = await new this.encryptor().encrypt(accountPassword);
             
             let accountNumber = "";
@@ -33,12 +39,8 @@ class CreateAccount {
                 verifyAccount = await new this.accountTable().validate(accountNumber, agencyNumber);
             }while(verifyAccount);
 
-
-            if(account.errors){
-                throw new Error(`400: ${account.errors}`);
-            }
-
             const ACCOUNT_DATA = {
+                ...user,
                 id: v4(),
                 owner_id: user.id,
                 account_number: accountNumber,

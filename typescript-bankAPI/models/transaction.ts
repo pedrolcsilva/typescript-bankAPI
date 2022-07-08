@@ -3,9 +3,7 @@ interface Transaction {
     type: string,
     amount: string,
     created_at: number,
-    source_id: string,
-    account_number: string,
-    agency: string,
+    source_id: string
 }
 
 export {Transaction};
